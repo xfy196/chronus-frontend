@@ -1,0 +1,63 @@
+.mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  animation: ani-show-mask 200ms ease-out;
+  .create-target-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    padding: 48rpx 48rpx;
+    width: 80%;
+    border-radius: 20rpx;
+    background-color: #fff;
+    transform: translateY(-60%) translateX(-50%);
+    box-shadow: 0 8rpx 80rpx rgba(0, 0, 0, 0.3);
+    animation: ani-show-modal 200ms ease-out;
+    .title {
+        font-size: 36rpx;
+        font-weight: 500;
+    }
+    .target-input{
+        width: 100%;
+        margin-left: 0;
+    }
+    .footer {
+        display: flex;
+        margin-top: 56rpx;
+        justify-content: flex-end;
+        .at-button {
+            border: none;
+            font-weight: 500;
+            padding: 0;
+            margin: 0;
+            &:last-of-type{
+                background-color: #1565c0;
+                color: white;
+            }
+        }
+    }
+  }
+}
+@keyframes ani-show-mask {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes ani-show-modal {
+    from {
+        transform: translateY(200%) translateX(-50%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-60%) translateX(-50%);
+        opacity: 1;
+    }
+}

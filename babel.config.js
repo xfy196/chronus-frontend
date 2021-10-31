@@ -16,9 +16,9 @@ module.exports = {
         libraryName: "taro-ui",
         style: (name) => {
           let componentName = name.startsWith("at-")
-            ? name.replace(/^at-/, "")
-            : name;
-
+          ? name.replace(/^at-/, "")
+          : name;
+          
           if (componentName.startsWith(taroUINamePath)) {
             componentName = componentName.replace(taroUINamePath, "");
           }
