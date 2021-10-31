@@ -1,7 +1,9 @@
 import { request } from "@tarojs/taro";
 import Taro from "@tarojs/taro";
 import configStore from "../store"
-const baseUrl = "http://127.0.0.1:7001"
+import {getUserInfo, login} from "../actions/user"
+import { CLEAR_LOGIN } from "../constants/user";
+const baseUrl = "http://192.168.2.101:7001/api"
 const store = configStore()
 export default function requestFn(options:Taro.request.Option):Promise<{code:number, data:any, message: string}>{
     const state = store.getState()
@@ -12,13 +14,22 @@ export default function requestFn(options:Taro.request.Option):Promise<{code:num
             "Authorization": state.user.token || Taro.getStorageSync("token"),
             ...options.header
         }
-    }).then(res => {
+    }).then(async (res) => {
         if(res.statusCode !== 200){
             Taro.showToast({
                 title: res.data.message,
                 mask: true,
                 icon: "none"
             })
+            if(res.statusCode === 401){
+                store.dispatch({
+                    type: CLEAR_LOGIN
+                })
+                let res =await login()
+                store.dispatch(res)
+                let result = await getUserInfo()
+                store.dispatch(result)
+            }
         }
         return Promise.resolve(res.data)
     }).catch(error => {

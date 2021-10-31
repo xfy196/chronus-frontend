@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { Provider } from "react-redux";
 
 import configStore from "./store";
@@ -9,7 +9,8 @@ import Taro from "@tarojs/taro";
 const store = configStore();
 
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+  }
 
   componentDidShow() {
     Taro.checkSession({
@@ -24,9 +25,11 @@ class App extends Component {
         Taro.showLoading();
 
         let res = await loginAction();
+        store.dispatch(res);
+        let result = await getUserInfo()
+        store.dispatch(result)
         Taro.hideLoading();
 
-        store.dispatch(res);
       },
     });
   }

@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
-import counter from './counter'
-import user from "./user"
+import user, { IUser } from "./user"
+export interface StoreState {
+  user: IUser
+}
 export default combineReducers({
-  counter,
   user
 })
