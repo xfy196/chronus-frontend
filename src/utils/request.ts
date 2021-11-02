@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import configStore from "../store"
 import {getUserInfo, login} from "../actions/user"
 import { CLEAR_LOGIN } from "../constants/user";
-const baseUrl = "http://192.168.2.101:7001/api"
+const baseUrl = "http://192.168.2.105:7001/api"
 const store = configStore()
 export default function requestFn(options:Taro.request.Option):Promise<{code:number, data:any, message: string}>{
     const state = store.getState()

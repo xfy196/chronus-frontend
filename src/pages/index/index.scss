@@ -1,7 +1,8 @@
 .container {
   height: 100vh;
   overflow: auto;
-  .blur-bg{
+  background-color: #fcfcfc;
+  .blur-bg {
     filter: blur(10rpx);
     overflow: hidden;
     animation: ani-blur 1000ms;
@@ -33,7 +34,7 @@
         font-weight: bold;
         font-size: inherit;
       }
-      .at-button{
+      .at-button {
         padding: 0;
         margin: 0;
         border: none;
@@ -48,7 +49,7 @@
         font-weight: bold;
         font-size: 26rpx;
       }
-      .login-btn{
+      .login-btn {
         width: 240px;
       }
       .total-time {
@@ -57,28 +58,47 @@
       }
     }
   }
-  .chart-area{
+  .chart-area {
     height: 500rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-  image {
-    width: 60%;
-    height: 60%;
+    image {
+      width: 60%;
+      height: 60%;
     }
   }
-  .target-container{
+  .target-container {
     height: calc(100vh - 640rpx);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    padding: 0 24rpx;
     .loading {
       position: absolute;
       top: 30%;
     }
+    .target-list {
+      flex: 1;
+      .title {
+        text {
+          margin: 0 10rpx;
+          color: #1565c0;
+        }
+      }
+      .target-item {
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 6rpx 24rpx rgba(25, 118, 210, 0.08);
+        border-radius: 18rpx;
+        margin-top: 24rpx;
+        padding: 24rpx 0;
+        height: 96rpx;
+      }
+    }
   }
-  .create-img{
+  .create-img {
     position: fixed;
     right: 0;
     bottom: 0;
@@ -94,7 +114,7 @@
 }
 
 @keyframes ani-blur {
-  from{
+  from {
     opacity: 0;
   }
   to {

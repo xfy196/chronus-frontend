@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { View, Image } from "@tarojs/components"
+import { View, Image, Text } from "@tarojs/components"
 import Taro from "@tarojs/taro"
 import { AtAvatar, AtButton } from "taro-ui"
 import { updateUserInfo } from "../../actions/user"
@@ -8,6 +8,8 @@ import { StoreState } from '../../reducers'
 import { IUser } from '../../reducers/user'
 import Loading from "../../components/loading"
 import CreateTarget from "./components/create-target"
+import {ITarget} from "./interface"
+import dayjs from "dayjs"
 import "./index.scss"
 import "taro-ui/dist/style/components/modal.scss"
 const EmptyImg = require("../../images/home/empty.png")
@@ -17,6 +19,20 @@ function Index() {
   const user: IUser | any = useSelector((state: StoreState) => state.user)
 
   const [isCreate, setIsCreate] = useState<boolean>(false)
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const [targets, setTargets] = useState<Array<ITarget>>([{
+    name: "nodejs",
+    uid: "1",
+    totalTime: 1635865165852,
+    lastRecordTime: 1635865165852
+  },{
+    name: "nodejs",
+    uid: "2",
+    totalTime: 1635865165852,
+    lastRecordTime: 1635865165852
+  }])
 
   // 取消
   const handelCancel = useCallback((value) => {
@@ -60,7 +76,6 @@ function Index() {
       })
     }
   }, [])
-
   // 创建书单
   const handleCreate = useCallback((e) => {
     e.stopPropagation()
@@ -87,11 +102,31 @@ function Index() {
           <Image src={EmptyImg}></Image>
         </View>
         <View className="target-container">
-          <Loading></Loading>
+          {isLoading && <Loading />}
+          {!isLoading && <View className="target-list">
+            <View className="title">
+              你有<Text>{targets.length}</Text>
+              个目标
+            </View>
+            {
+              targets.length > 0 && targets.map(item => {
+                return (
+                  <View key={item.uid} className="target-item">
+                    <View className="target-name">{item.name}</View>
+                    <View className="target-bottom">
+                      <View className="target-total-time">累计：{item.totalTime}</View>
+                      <View className="target-last-record-time">最后记录：{dayjs(item.lastRecordTime).format("MM月DD日 hh:mm")}</View>
+                    </View>
+                  </View>
+                )
+              })
+            }
+          </View>}
+
         </View>
         <Image className="create-img" onClick={handleCreate} src={CreateImg}></Image>
       </View>
-        {isCreate && <CreateTarget confirm={handleConfirm} cancel={handelCancel} />}
+      {isCreate && <CreateTarget confirm={handleConfirm} cancel={handelCancel} />}
     </View>
   )
 }
