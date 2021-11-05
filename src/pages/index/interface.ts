@@ -3,7 +3,7 @@ export interface ITarget {
     name: string,
     totalTime: number,
     u_id: string,
-    lastRecordTime: number,
+    last_record_time: number,
     createdAt: string,
     updatedAt: string
 }

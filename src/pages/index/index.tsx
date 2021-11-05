@@ -14,7 +14,6 @@ import "./index.scss"
 import "taro-ui/dist/style/components/modal.scss"
 import { getBooks } from '../../apis/books'
 import { getRecordTotals } from '../../apis/recors'
-
 const EmptyImg = require("../../images/home/empty.png")
 const CreateImg = require("../../images/home/create.png")
 
@@ -127,7 +126,7 @@ function Index() {
                     <View className='target-name'>{item.name}</View>
                     <View className='target-bottom'>
                       <View className='target-total-time'>累计：{item.totalTime}秒</View>
-                      <View className='target-last-record-time'>最后记录：{dayjs(item.lastRecordTime).format("MM月DD日 hh:mm")}</View>
+                      <View className='target-last-record-time'>最后记录：{dayjs(item.last_record_time).locale("zh-cn").format("MM月DD日 hh:mm")}</View>
                     </View>
                   </View>
                 )
