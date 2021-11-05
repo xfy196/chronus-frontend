@@ -71,8 +71,6 @@
   .target-container {
     height: calc(100vh - 640rpx);
     display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
     padding: 0 24rpx;
     .loading {
@@ -93,8 +91,35 @@
         box-shadow: 0 6rpx 24rpx rgba(25, 118, 210, 0.08);
         border-radius: 18rpx;
         margin-top: 24rpx;
-        padding: 24rpx 0;
-        height: 96rpx;
+        padding: 12rpx 16rpx;
+        height: 140rpx;
+        display: flex;
+        box-sizing: border-box;
+        flex-direction: column;
+        justify-content: space-evenly;
+        &:last-of-type{
+          margin-bottom: 24rpx;
+        }
+        .target-bottom {
+          display: flex;
+          font-size: 24rpx;
+          .target-name {
+            color: #010101;
+          }
+          .target-total-time {
+            line-height: 48rpx;
+            background-color: #faf9fd;
+            padding: 0 10rpx;
+            margin-right: 10rpx;
+            color: #adacb0;
+          }
+          .target-last-record-time {
+            line-height: 48rpx;
+            padding: 0 10rpx;
+            background-color: #faf9fd;
+            color: #adacb0;
+          }
+        }
       }
     }
   }

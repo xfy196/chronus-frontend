@@ -1,6 +1,9 @@
 export interface ITarget {
+    id: number,
     name: string,
     totalTime: number,
-    uid: string,
-    lastRecordTime: number
+    u_id: string,
+    lastRecordTime: number,
+    createdAt: string,
+    updatedAt: string
 }

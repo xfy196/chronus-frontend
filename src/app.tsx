@@ -6,6 +6,7 @@ import { login as loginAction, getUserInfo } from "./actions/user";
 import "./app.scss";
 import Taro from "@tarojs/taro";
 
+window.wx = Taro
 const store = configStore();
 
 class App extends Component {

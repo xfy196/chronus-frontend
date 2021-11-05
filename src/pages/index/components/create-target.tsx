@@ -1,25 +1,31 @@
 import { View } from '@tarojs/components'
 import React, { useCallback, useState } from 'react'
 import { AtButton, AtInput } from 'taro-ui'
+import {createBook} from "../../../apis/books"
 import "./create-target.scss"
 interface IProps {
     cancel: Function,
-    confirm: Function
+    confirm: Function,
+    requestBooks: Function
 }
 function CreateTarget(props: IProps) {
-    const [value, setValue] = useState<string>("")
+    const [name, setName] = useState<string>("")
     const handleChage = useCallback((value) => {
-        setValue(value)
+        setName(value)
     }, [])
     // 取消
     const handleCancel = useCallback(() => {
-        setValue("")
+        setName("")
         props.cancel(false)
     }, [])
-    const handleConfirm = useCallback(() => {
+    const handleConfirm = useCallback(async () => {
         // 调用接口
+        await createBook({
+            name
+        })
+        props.requestBooks()
         props.confirm(false)
-    }, [])
+    }, [name])
     return (
         <View className="mask">
             <View className="create-target-container">
@@ -31,7 +37,7 @@ function CreateTarget(props: IProps) {
                     name='value'
                     type='text'
                     placeholder='例如：阅读《CSS世界》'
-                    value={value}
+                    value={name}
                     onChange={handleChage}
                 />
                 <View className="footer">

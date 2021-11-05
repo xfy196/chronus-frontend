@@ -1,6 +1,5 @@
 export interface IUserInfo {
   avatarUrl: string;
-  books: Array<Object>;
   city: string;
   country: string;
   createdAt: Date;

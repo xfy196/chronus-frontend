@@ -1,9 +1,9 @@
-import { request } from "@tarojs/taro";
-import Taro from "@tarojs/taro";
+import Taro, { request } from "@tarojs/taro";
 import configStore from "../store"
 import {getUserInfo, login} from "../actions/user"
 import { CLEAR_LOGIN } from "../constants/user";
-const baseUrl = "http://192.168.2.105:7001/api"
+
+const baseUrl = "http://localhost:7001/api"
 const store = configStore()
 export default function requestFn(options:Taro.request.Option):Promise<{code:number, data:any, message: string}>{
     const state = store.getState()
@@ -25,11 +25,13 @@ export default function requestFn(options:Taro.request.Option):Promise<{code:num
                 store.dispatch({
                     type: CLEAR_LOGIN
                 })
-                let res =await login()
+                let res = await login()
                 store.dispatch(res)
                 let result = await getUserInfo()
                 store.dispatch(result)
             }
+        return Promise.reject(res.data)
+
         }
         return Promise.resolve(res.data)
     }).catch(error => {
