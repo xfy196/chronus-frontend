@@ -1,0 +1,77 @@
+.container {
+   height: 100vh;
+   padding: 0 30rpx;
+   overflow: auto;
+   .header {
+      margin-top: 20rpx;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .name-box {
+         display: flex;
+         align-items: center;
+         .name {
+            font-size: 42rpx;
+            font-weight: 600;
+         }
+         .edit-img {
+            width: 44rpx;
+            height: 44rpx;
+            margin-left: 20rpx;
+         }
+      }
+      .delete-img{
+         width: 44rpx;
+         height: 44rpx;
+      }
+   }
+   .statistics-list{
+      width: 100%;
+      display: flex;
+      margin-top: 20rpx;
+      justify-content: space-evenly;
+      .total-time, .max-time, .last-date{
+         flex: 1;
+         height: 200rpx;
+         border-radius: 20rpx;
+         display: flex;
+         flex-direction: column;
+         justify-content: space-evenly;
+         padding: 0 20rpx;
+         box-sizing: border-box;
+      }
+      .total-time {
+         background: red;
+         Image {
+            width: 44rpx;
+            height: 44rpx;
+         }
+      }
+      .max-time{
+         background: green;
+         margin: 0 36rpx;
+         Image {
+            width: 44rpx;
+            height: 44rpx;
+         }
+      }
+      .last-date{
+         background: yellow;
+         Image {
+            width: 44rpx;
+            height: 44rpx;
+         }
+      }
+   }
+   .wrapper{
+      margin-top: 40rpx;
+      .title {
+        color: #1976d2;
+      }
+      .targets {
+         .target-item {
+            border-top: 1rpx solid #ccc;
+         }
+      }
+   }
+}

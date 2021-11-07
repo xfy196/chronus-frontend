@@ -1,11 +1,12 @@
 export default {
   pages: [
+    'pages/detail/detail',
     'pages/index/index'
   ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: '读书计划',
+    navigationBarTitleText: 'Absorbed',
     navigationBarTextStyle: 'black'
   }
 }
