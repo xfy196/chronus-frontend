@@ -15,3 +15,17 @@ export function createBook(params){
         data: params
     })
 }
+// 获取书籍
+export function getBookById(id){
+    return request({
+        url: `/books/${id}`,
+    })
+}
+// 修改书籍名称
+export function updateBook(params){
+    return request({
+        url: `/books/${params.id}`,
+        method: "PUT",
+        data: params
+    })
+}

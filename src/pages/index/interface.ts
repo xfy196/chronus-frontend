@@ -5,5 +5,6 @@ export interface ITarget {
     u_id: string,
     last_record_time: number,
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
+    highTime?: string
 }

@@ -2,18 +2,21 @@ import Taro, { request } from "@tarojs/taro";
 import configStore from "../store"
 import {getUserInfo, login} from "../actions/user"
 import { CLEAR_LOGIN } from "../constants/user";
-
+import qs from "qs"
 const baseUrl = "http://localhost:7001/api"
 const store = configStore()
 export default function requestFn(options:Taro.request.Option):Promise<{code:number, data:any, message: string}>{
     const state = store.getState()
+    if(options.method === "GET" && options.data){
+        options.url += `?${qs.stringify(options.data)}`
+    }
     return request({
         ...options,
         url: `${baseUrl}${options.url}`,
         header: {
             "Authorization": state.user.token || Taro.getStorageSync("token"),
             ...options.header
-        }
+        },
     }).then(async (res) => {
         if(res.statusCode !== 200){
             Taro.showToast({

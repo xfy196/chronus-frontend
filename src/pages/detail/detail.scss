@@ -25,6 +25,9 @@
          height: 44rpx;
       }
    }
+   .loading-wrapper{
+      margin-top: 60rpx;
+   }
    .statistics-list{
       width: 100%;
       display: flex;
@@ -41,14 +44,14 @@
          box-sizing: border-box;
       }
       .total-time {
-         background: red;
+         background: #edf3f3;
          Image {
             width: 44rpx;
             height: 44rpx;
          }
       }
       .max-time{
-         background: green;
+         background: #f0efed;
          margin: 0 36rpx;
          Image {
             width: 44rpx;
@@ -56,7 +59,7 @@
          }
       }
       .last-date{
-         background: yellow;
+         background: #ecf1f8;
          Image {
             width: 44rpx;
             height: 44rpx;
@@ -69,9 +72,51 @@
         color: #1976d2;
       }
       .targets {
+         margin-top: 30rpx;
          .target-item {
-            border-top: 1rpx solid #ccc;
+            border-top: 1rpx solid #ededef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20rpx 0;
+            .left-target{
+               .title {
+                  font-size: 40rpx;
+                  color: #000;
+               }
+               .daterange{
+                  font-size: 24rpx;
+                  background: #f4f7f9;
+                  padding: 10rpx;
+                  border-radius: 8rpx;
+                  color: #adafb2;
+               }
+            }
+            .right-target {
+               max-width: 100rpx;
+               .second {
+                  color: #4264b2;
+               }
+            }
          }
       }
+   }
+   .start-record-btn{
+      width: 240rpx;
+      background: #3e67af;
+      height: 80rpx;
+      position: fixed;
+      right: 30rpx;
+      bottom: 30rpx;
+      display: flex;
+      align-items: center;
+      border-radius: 40rpx;
+      justify-content: center;
+      Image {
+         width: 44rpx;
+         height: 44rpx;
+         margin-right: 20rpx;
+      }
+      color: #fff;
    }
 }

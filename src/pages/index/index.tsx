@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../../reducers'
 import { IUser } from '../../reducers/user'
 import Loading from "../../components/loading"
-import CreateTarget from "./components/create-target"
+import CreateTarget from "../../components/create-target/create-target"
 import { ITarget } from "./interface"
 import dayjs from "dayjs"
 import "./index.scss"
@@ -137,7 +137,7 @@ function Index() {
         </View>
         <Image className='create-img' onClick={handleCreate} src={CreateImg}></Image>
       </View>
-      {isCreate && <CreateTarget requestBooks={requestBooks} confirm={handleConfirm} cancel={handelCancel} />}
+      {isCreate && <CreateTarget mode="create" title={"新目标的名称"} requestBooks={requestBooks} confirm={handleConfirm} cancel={handelCancel} />}
     </View>
   )
 }
