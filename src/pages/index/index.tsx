@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { View, Image, Text } from "@tarojs/components"
-import Taro from "@tarojs/taro"
+import Taro, { useDidShow } from "@tarojs/taro"
 import { AtAvatar, AtButton } from "taro-ui"
 import { updateUserInfo } from "../../actions/user"
 import { useDispatch, useSelector } from 'react-redux'
@@ -26,14 +26,20 @@ function Index() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const [totalTime, setTotalTime] = useState<number>(0)
+  const [isStartTime, setIsStartTime] = useState<boolean>(false)
 
   const [targets, setTargets] = useState<Array<ITarget>>([])
+  const time = useSelector((state: StoreState) => state.record.time)
+  const isPause = useSelector((state: StoreState) => state.record.isPause)
+  const name = useSelector((state: StoreState) => state.record.name)
+  const id = useSelector((state: StoreState) => state.record.id)
   useEffect(() => {
     if (user.isLogin) {
       requestBooks()
       requestRecordTotals()
     }
   }, [user.isLogin])
+
 
   const requestBooks = useCallback(async () => {
     setIsLoading(true)
@@ -96,6 +102,16 @@ function Index() {
   const handleConfirm = useCallback((val) => {
     setIsCreate(val)
   }, [])
+  const handelToDetail = useCallback((id) => {
+    Taro.navigateTo({
+      url: `/pages/detail/detail?id=${id}`
+    })
+  }, [])
+  const handelLook = useCallback(() => {
+    Taro.navigateTo({
+      url: `/pages/record/record?id=${id}&name=${name}`
+    })
+  }, [id, name])
   return (
     <View className='container'>
       <View className={isCreate ? 'blur-bg' : ''}>
@@ -112,6 +128,14 @@ function Index() {
         <View className='chart-area'>
           <Image src={EmptyImg}></Image>
         </View>
+        {/* 记录的面板 */}
+        {
+          !!time && <View className="record-pane">
+            <View className="left-txt">当前<Text className="txt">{name}</Text>{isPause ? "暂停中" : '进行中'}</View>
+            <View className="look-btn" onClick={handelLook}>查看</View>
+          </View>
+        }
+
         <View style={isLoading ? { alignItems: 'center', justifyContent: 'center' } : {}} className='target-container'>
           {isLoading && <Loading />}
           {!isLoading && <View className='target-list'>
@@ -122,7 +146,7 @@ function Index() {
             {
               targets.length > 0 && targets.map(item => {
                 return (
-                  <View key={item.id} className='target-item'>
+                  <View key={item.id} onClick={handelToDetail.bind(null, item.id)} className='target-item'>
                     <View className='target-name'>{item.name}</View>
                     <View className='target-bottom'>
                       <View className='target-total-time'>累计：{item.totalTime}秒</View>

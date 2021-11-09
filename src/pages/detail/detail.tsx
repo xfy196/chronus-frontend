@@ -1,4 +1,5 @@
 import { View, Image, Text } from '@tarojs/components'
+import Taro from "@tarojs/taro"
 import { useDidShow, useRouter } from "@tarojs/taro"
 import React, { useCallback, useState } from 'react'
 import Loading from "../../components/loading"
@@ -8,6 +9,8 @@ import { getBookById } from "../../apis/books"
 import { getRecordsByBId } from "../../apis/recors"
 import { ITarget } from '../index/interface'
 import dayjs from "dayjs"
+import { useSelector } from 'react-redux'
+import { StoreState } from '../../reducers'
 const EditImg = require("../../images/detail/edit.png")
 const DeleteImg = require("../../images/detail/remove.png")
 const TimeImg = require("../../images/detail/time.png")
@@ -20,7 +23,7 @@ function Detail() {
     const [book, setBook] = useState<ITarget>()
     const [targets, setTargets] = useState<Array<any>>([])
     const router = useRouter()
-
+    const id = useSelector((state: StoreState) => state.record.id)
     const handleInitRequest = useCallback(() => {
         handleTopRequest()
     }, [])
@@ -50,7 +53,21 @@ function Detail() {
         if (res.code === 200) {
             setTargets(res.data)
         }
-    }, [])
+    }, [router.params.id])
+
+    const handelToRecord = useCallback(() => {
+        if(book?.id !== id && id !== 0){
+            Taro.showToast({
+                title: "当前已有计划在进行中",
+                icon: "none"
+            })
+        }else {
+            Taro.navigateTo({
+                url: `/pages/record/record?id=${router.params.id}&name=${book?.name}`,
+            })
+        }
+    }, [id, book?.id])
+
     useDidShow(() => {
         handleTopRequest()
         handleTargets()
@@ -107,7 +124,7 @@ function Detail() {
                 </View>
             }
             {isUpdate && <CreateTarget data={book} mode="update" cancel={handleCancel} confirm={handleConfirm} requestBooks={handleInitRequest} title={'目标修改为?'} />}
-            <View className="start-record-btn">
+            <View onClick={handelToRecord} className="start-record-btn">
                 <Image src={TimerImg}/>
                 开始记录
             </View>

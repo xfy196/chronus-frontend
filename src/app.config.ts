@@ -1,7 +1,8 @@
 export default {
   pages: [
+    'pages/index/index',
     'pages/detail/detail',
-    'pages/index/index'
+    'pages/record/record'
   ],
   window: {
     backgroundTextStyle: 'light',
