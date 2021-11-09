@@ -13,28 +13,16 @@ import "dayjs/locale/zh-cn"
 dayjs.locale("zh-cn")
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from "../../reducers/index"
-import { SET_START_TIME, SET_TIME, SET_IS_PAUSE, SET_NAME, SET_ID } from '../../constants/record'
+import { SET_START_TIME, SET_TIME, SET_IS_PAUSE, SET_NAME, SET_ID, SET_TIMEOUT } from '../../constants/record'
 function Record() {
     const router = useRouter()
     const time = useSelector((state: StoreState) => state.record.time)
-    const [isStartTime, setIsStartTime] = useState<boolean>(false)
+    const timeoutfn = useSelector((state: StoreState) => state.record.timeoutfn)
     const startTime = useSelector((state: StoreState) => state.record.startTime)
-    const endTime = useSelector((state: StoreState) => state.record.endTime)
     const dispatch = useDispatch()
     const [id, setId] = useState<string>("")
     const [name, setName] = useState<string>("")
     const isPause = useSelector((state: StoreState) => state.record.isPause)
-    useEffect(() => {
-        if (isStartTime) {
-            let timeoutfn = setTimeout(() => {
-                dispatch({
-                    type: SET_TIME,
-                    data: 1000 + time
-                })
-                clearTimeout(timeoutfn)
-            }, 1000)
-        }
-    }, [time, isStartTime])
     useDidShow(() => {
         setName(router.params?.name || '')
         setId(router.params?.id || '')
@@ -51,13 +39,17 @@ function Record() {
                 type: SET_START_TIME,
                 data: Date.now()
             })
-            setIsStartTime(true)
-        } else {
+        }
+        if (!timeoutfn) {
+            let t = setInterval(() => {
+                dispatch({
+                    type: SET_TIME,
+                })
+            }, 1000)
             dispatch({
-                type: SET_TIME,
-                data: Date.now() - startTime
+                type: SET_TIMEOUT,
+                data: t
             })
-            setIsStartTime(true)
         }
     })
     const handelClickPause = useCallback(() => {
@@ -93,7 +85,7 @@ function Record() {
                     type: SET_ID,
                     data: id
                 })
-                setIsStartTime(false)
+                clearInterval(timeoutfn)
                 Taro.navigateBack()
             }
         })

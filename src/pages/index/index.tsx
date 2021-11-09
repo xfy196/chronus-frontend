@@ -26,7 +26,6 @@ function Index() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const [totalTime, setTotalTime] = useState<number>(0)
-  const [isStartTime, setIsStartTime] = useState<boolean>(false)
 
   const [targets, setTargets] = useState<Array<ITarget>>([])
   const time = useSelector((state: StoreState) => state.record.time)
@@ -130,7 +129,7 @@ function Index() {
         </View>
         {/* 记录的面板 */}
         {
-          !!time && <View className="record-pane">
+          time !== 0 && <View className="record-pane">
             <View className="left-txt">当前&nbsp;<Text className="name">{name}</Text>&nbsp;{isPause ? "暂停中" : '进行中'}</View>
             <View className="look-btn" onClick={handelLook}>查看</View>
           </View>

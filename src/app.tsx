@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Provider } from "react-redux";
+import { Connect, connect, ConnectOptions, DefaultRootState, Provider } from "react-redux";
 
 import configStore from "./store";
 import { login as loginAction, getUserInfo } from "./actions/user";
