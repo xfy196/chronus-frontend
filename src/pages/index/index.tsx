@@ -131,7 +131,7 @@ function Index() {
         {/* 记录的面板 */}
         {
           !!time && <View className="record-pane">
-            <View className="left-txt">当前<Text className="txt">{name}</Text>{isPause ? "暂停中" : '进行中'}</View>
+            <View className="left-txt">当前&nbsp;<Text className="name">{name}</Text>&nbsp;{isPause ? "暂停中" : '进行中'}</View>
             <View className="look-btn" onClick={handelLook}>查看</View>
           </View>
         }
