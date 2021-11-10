@@ -125,7 +125,7 @@ function Index() {
           <View className='info'>
             {!user.isLogin && <AtButton className='login-btn' size='small' onClick={handelGetUserInfo}>授权登录</AtButton>}
             {user.isLogin && <View className='nick-name'>{user.userInfo.nickName},</View>}
-            <View className='total-time'>你的总累计时间为{totalTime}秒</View>
+            <View className='total-time'>你的总累计时间为{dayjs.duration(totalTime).seconds()}秒</View>
           </View>
         </View>
         <View className='chart-area'>

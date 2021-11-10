@@ -6,5 +6,5 @@ export interface ITarget {
     last_record_time: number,
     createdAt: string,
     updatedAt: string,
-    highTime?: string
+    highTime?: number
 }

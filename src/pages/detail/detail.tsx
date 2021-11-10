@@ -9,6 +9,11 @@ import { getBookById } from "../../apis/books"
 import { getRecordsByBId } from "../../apis/recors"
 import { ITarget } from '../index/interface'
 import dayjs from "dayjs"
+import duration from "dayjs/plugin/duration"
+dayjs.extend(duration)
+import "dayjs/locale/zh-cn"
+dayjs.locale("zh-cn")
+import request from "../../utils/request"
 import { useSelector } from 'react-redux'
 import { StoreState } from '../../reducers'
 const EditImg = require("../../images/detail/edit.png")
@@ -56,7 +61,6 @@ function Detail() {
     }, [router.params.id])
 
     const handelToRecord = useCallback(() => {
-        console.log(id)
         if(book?.id !== id && id !== 0){
             Taro.showToast({
                 title: "当前已有计划在进行中",
@@ -69,6 +73,24 @@ function Detail() {
         }
     }, [id, book?.id])
 
+
+    const handelDelete = useCallback(async() => {
+        let res = await request({
+            url: `/books/${book?.id}`,
+            method: "DELETE"
+        })
+        if(res.code === 200){
+            Taro.showToast({
+                icon: "none",
+                title: res.message,
+                success(){
+                    Taro.navigateTo({
+                        url: '/pages/index/index'
+                    })
+                }
+            })
+        }
+    }, [book?.id])
     useDidShow(() => {
         handleTopRequest()
         handleTargets()
@@ -80,18 +102,18 @@ function Detail() {
                     <View className="name">{book?.name}</View>
                     <Image className="edit-img" onClick={handleEdit} src={EditImg}></Image>
                 </View>
-                <Image className="delete-img" src={DeleteImg}></Image>
+                <Image onClick={handelDelete} className="delete-img" src={DeleteImg}></Image>
             </View>
             <View className="statistics-list">
                 <View className="total-time">
                     <Image src={TimeImg}></Image>
                     <View className="title">累计时间</View>
-                    <View className="value">{book?.totalTime}秒</View>
+                    <View className="value">{dayjs.duration(book?.totalTime ?? 0).seconds()}秒</View>
                 </View>
                 <View className="max-time">
                     <Image src={LastTimeImg}></Image>
                     <View className="title">最长时间</View>
-                    <View className="value">{book?.highTime}秒</View>
+                    <View className="value">{dayjs.duration(book?.highTime ?? 0).seconds()}秒</View>
                 </View>
                 <View className="last-date">
                     <Image src={RecentImg}></Image>
@@ -115,7 +137,7 @@ function Detail() {
                                             <View className="daterange">{dayjs(item.createdAt).locale("zh-cn").format("MM月DD日 hh:ss")} ~ {dayjs(item.updatedAt).locale("zh-cn").format("MM月DD日 hh:ss")}</View>
                                         </View>
                                         <View className="right-target">
-                                            <View className="time"><Text className="second">{item.time}</Text>秒</View>
+                                            <View className="time"><Text className="second">{dayjs.duration(item.time).seconds()}</Text>秒</View>
                                         </View>
                                     </View>
                                 )

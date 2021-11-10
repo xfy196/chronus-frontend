@@ -8,6 +8,92 @@
         margin-top: 20rpx;
         font-size: 28rpx;
     }
+    .save-title{
+        color: #5168a6;
+        margin-top: 60rpx;
+    }
+    .save-info{
+        height: 240rpx;
+        border-radius: 20rpx;
+        box-shadow:  4px 4px 12px #ddebf3,
+             -4px -4px 12px #ddebf3;
+        display: flex;
+        justify-content: space-evenly;
+      .start-time-info, .end-time-info{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          .hm-time {
+              color: #030303;
+              font-size: 36rpx;
+              font-weight: 600;
+          }
+          .date-time{
+              color: #555555;
+              font-size: 28rpx;
+          }
+          .txt {
+              color: #999999;
+              font-size: 28rpx;
+          }
+      }
+      .record-time-info{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .record-time{
+              color: #496db6;
+          }
+          .progress {
+              margin-top: 20rpx;
+              position: relative;
+              width: 100rpx;
+              height: 10rpx;
+              background-color: #c6def7;
+            &::before{
+                content: '';
+                position: absolute;
+                width: 20rpx;
+                height: 20rpx;
+                border-radius: 100%;
+                background: #87b0e6;
+                left: -5rpx;
+                top: -5rpx;
+            }
+            &::after{
+                content: '';
+                position: absolute;
+                width: 20rpx;
+                height: 20rpx;
+                border-radius: 100%;
+                background: #87b0e6;
+                right: -5rpx;
+                top: -5rpx;
+            }
+          }
+      }
+    }
+    .summary{
+        margin-top: 100rpx;
+        .title {
+            color: #496db6;
+        }
+        .summary-value{
+            margin-top: 30rpx;
+            border-radius: 20rpx;
+        }
+        .save-btn{
+            width: 180rpx;
+            height: 64rpx;
+            line-height: 64rpx;
+            color: #fff;
+            background: #4873c4;
+            text-align: center;
+            border-radius: 40rpx;
+            margin: 60rpx auto 0;
+        }
+    }
     .watch-box{
         width: 100%;
         display: flex;
@@ -21,7 +107,7 @@
         }
         .watch {
             width: 360rpx;
-                height: 360rpx;
+            height: 360rpx;
             border-radius: 50%;
             display: flex;
             justify-content: center;
