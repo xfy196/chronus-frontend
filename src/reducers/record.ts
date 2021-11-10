@@ -31,7 +31,7 @@ export default function reducer(state = INITIAL_STATE, action) {
     case SET_TIME:
       return {
         ...state,
-        time: action.data ? action.data : 1000 + state.time,
+        time: action.data || action.data === 0 ? action.data : 1000 + state.time,
       };
     case SET_START_TIME:
       return {

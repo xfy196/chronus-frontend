@@ -69,6 +69,11 @@ function Record() {
             confirmText: "确定",
             cancelText: "取消",
             success() {
+                clearInterval(timeoutfn)
+                dispatch({
+                    type: SET_TIMEOUT,
+                    data: 0
+                })
                 dispatch({
                     type: SET_TIME,
                     data: 0
@@ -83,13 +88,12 @@ function Record() {
                 })
                 dispatch({
                     type: SET_ID,
-                    data: id
+                    data: 0
                 })
-                clearInterval(timeoutfn)
                 Taro.navigateBack()
             }
         })
-    }, [])
+    }, [timeoutfn])
     return (
         <View className="container">
             <View className="name">{name}</View>

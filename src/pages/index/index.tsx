@@ -10,6 +10,10 @@ import Loading from "../../components/loading"
 import CreateTarget from "../../components/create-target/create-target"
 import { ITarget } from "./interface"
 import dayjs from "dayjs"
+import duration from "dayjs/plugin/duration"
+dayjs.extend(duration)
+import "dayjs/locale/zh-cn"
+dayjs.locale("zh-cn")
 import "./index.scss"
 import "taro-ui/dist/style/components/modal.scss"
 import { getBooks } from '../../apis/books'
@@ -130,8 +134,13 @@ function Index() {
         {/* 记录的面板 */}
         {
           time !== 0 && <View className="record-pane">
-            <View className="left-txt">当前&nbsp;<Text className="name">{name}</Text>&nbsp;{isPause ? "暂停中" : '进行中'}</View>
-            <View className="look-btn" onClick={handelLook}>查看</View>
+            <View className="top">
+
+              <View className="left-txt">当前&nbsp;<Text className="name">{name}</Text>&nbsp;{isPause ? "暂停中" : '进行中'}</View>
+              <View className="look-btn" onClick={handelLook}>查看</View>
+            </View>
+            <View className="time">{`${dayjs.duration(time).hours()}:${dayjs.duration(time).minutes()}:${dayjs.duration(time).seconds()}`}</View>
+
           </View>
         }
 

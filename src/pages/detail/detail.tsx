@@ -56,6 +56,7 @@ function Detail() {
     }, [router.params.id])
 
     const handelToRecord = useCallback(() => {
+        console.log(id)
         if(book?.id !== id && id !== 0){
             Taro.showToast({
                 title: "当前已有计划在进行中",
