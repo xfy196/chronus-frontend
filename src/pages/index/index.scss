@@ -1,7 +1,9 @@
 .container {
-  height: 100vh;
-  overflow: auto;
   background-color: #fcfcfc;
+  >view {
+    height: 100vh;
+  overflow: auto;
+  }
   .blur-bg {
     filter: blur(10rpx);
     overflow: hidden;
@@ -171,7 +173,6 @@
     box-shadow: rgba(0, 0, 0, 0.2) 0 3rpx 20rpx;
   }
 }
-
 @keyframes ani-blur {
   from {
     opacity: 0;

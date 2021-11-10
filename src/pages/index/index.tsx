@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { View, Image, Text } from "@tarojs/components"
 import Taro, { useDidShow } from "@tarojs/taro"
 import { AtAvatar, AtButton } from "taro-ui"
@@ -36,13 +36,39 @@ function Index() {
   const isPause = useSelector((state: StoreState) => state.record.isPause)
   const name = useSelector((state: StoreState) => state.record.name)
   const id = useSelector((state: StoreState) => state.record.id)
+  const pieRef = useRef<null | any>(null)
+  const [pieOptions, setPieOptions] = useState<object>({
+    tooltip: {
+      trigger: 'item'
+    },
+    series: [
+      {
+        name: 'Access From',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: 1048, name: 'Search Engine' },
+          { value: 735, name: 'Direct' },
+          { value: 580, name: 'Email' },
+          { value: 484, name: 'Union Ads' },
+          { value: 300, name: 'Video Ads' }
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+    ]
+  })
   useEffect(() => {
     if (user.isLogin) {
       requestBooks()
       requestRecordTotals()
     }
   }, [user.isLogin])
-
 
   const requestBooks = useCallback(async () => {
     setIsLoading(true)
