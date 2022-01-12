@@ -3,7 +3,8 @@ import configStore from "../store"
 import {getUserInfo, login} from "../actions/user"
 import { CLEAR_LOGIN } from "../constants/user";
 import qs from "qs"
-const baseUrl = "http://localhost:7001/api"
+import {apiUrl} from "../config"
+const baseUrl = apiUrl
 const store = configStore()
 export default function requestFn(options:Taro.request.Option):Promise<{code:number, data:any, message: string}>{
     const state = store.getState()

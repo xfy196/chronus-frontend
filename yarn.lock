@@ -3481,7 +3481,7 @@ cssstyle@^2.0.0:
 
 csstype@^3.0.2:
   version "3.0.9"
-  resolved "https://registry.nlark.com/csstype/download/csstype-3.0.9.tgz?cache=0&sync_timestamp=1631540658518&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcsstype%2Fdownload%2Fcsstype-3.0.9.tgz#6410af31b26bd0520933d02cbc64fce9ce3fbf0b"
+  resolved "https://registry.nlark.com/csstype/download/csstype-3.0.9.tgz"
   integrity sha1-ZBCvMbJr0FIJM9AsvGT86c4/vws=
 
 cuint@^0.2.2:
@@ -9766,7 +9766,7 @@ tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
 
 tslib@^2.3.0:
   version "2.3.1"
-  resolved "https://registry.nlark.com/tslib/download/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  resolved "https://registry.nlark.com/tslib/download/tslib-2.3.1.tgz"
   integrity sha1-6KM1rdXOrlGqJh0ypJAVjvBC7wE=
 
 tsutils@^3.21.0:
