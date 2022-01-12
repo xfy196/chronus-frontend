@@ -21,10 +21,11 @@ import { getRecordTotals } from '../../apis/recors'
 const EmptyImg = require("../../images/home/empty.png")
 const CreateImg = require("../../images/home/create.png")
 
+
 function Index() {
+  console.log("index")
   const dispatch = useDispatch()
   const user: IUser | any = useSelector((state: StoreState) => state.user)
-
   const [isCreate, setIsCreate] = useState<boolean>(false)
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -36,33 +37,6 @@ function Index() {
   const isPause = useSelector((state: StoreState) => state.record.isPause)
   const name = useSelector((state: StoreState) => state.record.name)
   const id = useSelector((state: StoreState) => state.record.id)
-  const pieRef = useRef<null | any>(null)
-  const [pieOptions, setPieOptions] = useState<object>({
-    tooltip: {
-      trigger: 'item'
-    },
-    series: [
-      {
-        name: 'Access From',
-        type: 'pie',
-        radius: '50%',
-        data: [
-          { value: 1048, name: 'Search Engine' },
-          { value: 735, name: 'Direct' },
-          { value: 580, name: 'Email' },
-          { value: 484, name: 'Union Ads' },
-          { value: 300, name: 'Video Ads' }
-        ],
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
-          }
-        }
-      }
-    ]
-  })
   useEffect(() => {
     if (user.isLogin) {
       requestBooks()
@@ -86,40 +60,39 @@ function Index() {
   }, [user.isLogin])
 
   const handelGetUserInfo = useCallback(async () => {
-    if (window.wx.getUserProfile) {
-
-      Taro.getUserProfile({
-        desc: "获取用户信息",
-        async success({ encryptedData, iv }) {
-          let res = await updateUserInfo({
-            encryptedData,
-            iv,
-            id: user.userInfo.id
-          })
-          dispatch(res)
-        },
-        fail(err) {
-          Taro.showToast({
-            title: err.errMsg
-          })
-        }
-      })
-    } else {
-      Taro.getUserInfo({
-        async success({ encryptedData, iv }) {
-          let res = await updateUserInfo({
-            encryptedData,
-            iv,
-            id: user.userInfo.id
-          })
-          dispatch(res)
-        },
-        fail(err) {
-          Taro.showToast({
-            title: err.errMsg
-          })
-        }
-      })
+      if (window.wx.getUserProfile) {
+        Taro.getUserProfile({
+          desc: "获取用户信息",
+          async success({ encryptedData, iv }) {
+            let res = await updateUserInfo({
+              encryptedData,
+              iv,
+              id: user.userInfo.id
+            })
+            dispatch(res)
+          },
+          fail(err) {
+            Taro.showToast({
+              title: err.errMsg
+            })
+          }
+        })
+      } else {
+        Taro.getUserInfo({
+          async success({ encryptedData, iv }) {
+            let res = await updateUserInfo({
+              encryptedData,
+              iv,
+              id: user.userInfo.id
+            })
+            dispatch(res)
+          },
+          fail(err) {
+            Taro.showToast({
+              title: err.errMsg
+            })
+          }
+        })
     }
   }, [])
   // 创建书单
@@ -141,6 +114,9 @@ function Index() {
       url: `/pages/record/record?id=${id}&name=${name}`
     })
   }, [id, name])
+  const formateTime = useCallback((time: number) => {
+    return ~~(time / 1000)
+  }, [totalTime])
   return (
     <View className='container'>
       <View className={isCreate ? 'blur-bg' : ''}>
@@ -151,7 +127,7 @@ function Index() {
           <View className='info'>
             {!user.isLogin && <AtButton className='login-btn' size='small' onClick={handelGetUserInfo}>授权登录</AtButton>}
             {user.isLogin && <View className='nick-name'>{user.userInfo.nickName},</View>}
-            <View className='total-time'>你的总累计时间为{dayjs.duration(totalTime).seconds()}秒</View>
+            <View className='total-time'>你的总累计时间为{formateTime(totalTime)}秒</View>
           </View>
         </View>
         <View className='chart-area'>
@@ -183,7 +159,7 @@ function Index() {
                   <View key={item.id} onClick={handelToDetail.bind(null, item.id)} className='target-item'>
                     <View className='target-name'>{item.name}</View>
                     <View className='target-bottom'>
-                      <View className='target-total-time'>累计：{item.totalTime}秒</View>
+                      <View className='target-total-time'>累计：{formateTime(item.totalTime)}秒</View>
                       <View className='target-last-record-time'>最后记录：{dayjs(item.last_record_time).locale("zh-cn").format("MM月DD日 hh:mm")}</View>
                     </View>
                   </View>
@@ -199,4 +175,4 @@ function Index() {
     </View>
   )
 }
-export default React.memo(Index)
+export default Index

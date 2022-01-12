@@ -1,4 +1,4 @@
-import { LOGIN, SET_USER_INFO } from "../constants/user";
+import { CLEAR_LOGIN, LOGIN, SET_USER_INFO } from "../constants/user";
 import Taro from "@tarojs/taro";
 import request from "../utils/request";
 import { actionData } from "src/interface";
@@ -19,11 +19,7 @@ export const login: () => Promise<actionData> = async () => {
       },
     };
   } catch (error) {
-    console.log(error);
-    return {
-      type: "ERROR",
-      payload: {},
-    };
+    throw error
   }
 };
 export const getUserInfo = async () => {
@@ -50,10 +46,7 @@ export const getUserInfo = async () => {
       payload: res.data,
     };
   } catch (error) {
-    return {
-      type: "ERROR",
-      payload: error,
-    };
+   throw error
   }
 };
 export const updateUserInfo = async (params) => {
@@ -66,9 +59,6 @@ export const updateUserInfo = async (params) => {
       let r = await getUserInfo()
       return r
   } catch (error) {
-    return {
-      type: "ERROR",
-      payload: error,
-    };
+   throw error
   }
 };

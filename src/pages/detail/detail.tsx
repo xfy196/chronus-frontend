@@ -84,7 +84,7 @@ function Detail() {
                 icon: "none",
                 title: res.message,
                 success(){
-                    Taro.navigateTo({
+                    Taro.reLaunch({
                         url: '/pages/index/index'
                     })
                 }

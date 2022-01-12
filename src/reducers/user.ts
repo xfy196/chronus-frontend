@@ -15,7 +15,7 @@ const INITIAL_STATE: IUser = {
   num: 0
 };
 
-export default function counter(state = INITIAL_STATE, action: actionData) {
+export default function reducers(state = INITIAL_STATE, action: actionData) {
   switch (action.type) {
     case LOGIN:
       let token = action.payload.token;
@@ -33,16 +33,14 @@ export default function counter(state = INITIAL_STATE, action: actionData) {
       };
     case SET_USER_INFO:
       let userInfo = { ...action.payload };
-      let isLogin = false
       if (userInfo.userId && state.token) {
-        isLogin = true
+        state.isLogin = true
       }
+      state.userInfo = userInfo
       return {
         ...state,
-        isLogin,
-        userInfo
       };
     default:
-      return state;
+      return state
   }
 }
