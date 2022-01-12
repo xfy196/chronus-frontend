@@ -12,6 +12,7 @@ async function restartLogin() {
   let res = await loginAction();
   store.dispatch(res);
   let result = await getUserInfo()
+  console.log(result)
   store.dispatch(result)
 }
 

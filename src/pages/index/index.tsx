@@ -95,7 +95,7 @@ function Index() {
         }
       })
     }
-  }, [])
+  }, [user.userInfo])
   // 创建书单
   const handleCreate = useCallback((e) => {
     e.stopPropagation()
