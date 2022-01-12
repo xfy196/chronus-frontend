@@ -1,6 +1,5 @@
 import { Component } from "react";
 import { Provider } from "react-redux";
-
 import configStore from "./store";
 import { login as loginAction, getUserInfo } from "./actions/user";
 import "./app.scss";
@@ -23,16 +22,16 @@ class App extends Component {
         try {
           Taro.showLoading();
           let res = await getUserInfo();
-          Taro.hideLoading();
           store.dispatch(res)
+          Taro.hideLoading();
         } catch (error) {
-         await restartLogin()
+          await restartLogin()
         }
       },
       async fail() {
+
         // session失效
         Taro.showLoading();
-
         await restartLogin()
         Taro.hideLoading();
 

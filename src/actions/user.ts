@@ -1,4 +1,4 @@
-import { CLEAR_LOGIN, LOGIN, SET_USER_INFO } from "../constants/user";
+import { LOGIN, SET_USER_INFO } from "../constants/user";
 import Taro from "@tarojs/taro";
 import request from "../utils/request";
 import { actionData } from "src/interface";

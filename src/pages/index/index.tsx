@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { View, Image, Text } from "@tarojs/components"
+import { View, Image, Text, Button } from "@tarojs/components"
 import Taro, { useDidShow } from "@tarojs/taro"
 import { AtAvatar, AtButton } from "taro-ui"
-import { updateUserInfo } from "../../actions/user"
+import { getUserInfo, updateUserInfo } from "../../actions/user"
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../../reducers'
 import { IUser } from '../../reducers/user'
@@ -23,7 +23,6 @@ const CreateImg = require("../../images/home/create.png")
 
 
 function Index() {
-  console.log("index")
   const dispatch = useDispatch()
   const user: IUser | any = useSelector((state: StoreState) => state.user)
   const [isCreate, setIsCreate] = useState<boolean>(false)
@@ -44,6 +43,8 @@ function Index() {
     }
   }, [user.isLogin])
 
+  useEffect(() => {
+  }, [user])
   const requestBooks = useCallback(async () => {
     setIsLoading(true)
     let res = await getBooks()
@@ -60,39 +61,39 @@ function Index() {
   }, [user.isLogin])
 
   const handelGetUserInfo = useCallback(async () => {
-      if (window.wx.getUserProfile) {
-        Taro.getUserProfile({
-          desc: "获取用户信息",
-          async success({ encryptedData, iv }) {
-            let res = await updateUserInfo({
-              encryptedData,
-              iv,
-              id: user.userInfo.id
-            })
-            dispatch(res)
-          },
-          fail(err) {
-            Taro.showToast({
-              title: err.errMsg
-            })
-          }
-        })
-      } else {
-        Taro.getUserInfo({
-          async success({ encryptedData, iv }) {
-            let res = await updateUserInfo({
-              encryptedData,
-              iv,
-              id: user.userInfo.id
-            })
-            dispatch(res)
-          },
-          fail(err) {
-            Taro.showToast({
-              title: err.errMsg
-            })
-          }
-        })
+    if (window.wx.getUserProfile) {
+      Taro.getUserProfile({
+        desc: "获取用户信息",
+        async success({ encryptedData, iv }) {
+          let res = await updateUserInfo({
+            encryptedData,
+            iv,
+            id: user.userInfo.id
+          })
+          dispatch(res)
+        },
+        fail(err) {
+          Taro.showToast({
+            title: err.errMsg
+          })
+        }
+      })
+    } else {
+      Taro.getUserInfo({
+        async success({ encryptedData, iv }) {
+          let res = await updateUserInfo({
+            encryptedData,
+            iv,
+            id: user.userInfo.id
+          })
+          dispatch(res)
+        },
+        fail(err) {
+          Taro.showToast({
+            title: err.errMsg
+          })
+        }
+      })
     }
   }, [])
   // 创建书单
