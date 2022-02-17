@@ -155,6 +155,7 @@
             }
         }
         .save-over-btn{
+            z-index: 1;
             width: 260rpx;
             height: 64rpx;
             display: flex;
@@ -172,6 +173,7 @@
             }
         }
         .cancel-btn {
+            z-index: 1;
             color: #9c9c9c;
             font-size: 28rpx;
             margin-top: 40rpx;
