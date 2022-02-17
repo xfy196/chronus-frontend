@@ -1,6 +1,5 @@
 import Taro, { request } from "@tarojs/taro";
 import configStore from "../store";
-import { getUserInfo, login } from "../actions/user";
 import { CLEAR_LOGIN } from "../constants/user";
 import qs from "qs";
 import { apiUrl } from "../config";

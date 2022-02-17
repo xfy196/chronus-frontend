@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { View, Image, Text, Button } from "@tarojs/components"
-import Taro, { useDidShow } from "@tarojs/taro"
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { View, Image, Text } from "@tarojs/components"
+import Taro from "@tarojs/taro"
 import { AtAvatar, AtButton } from "taro-ui"
-import { getUserInfo, updateUserInfo } from "../../actions/user"
+import { updateUserInfo } from "../../actions/user"
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../../reducers'
 import { IUser } from '../../reducers/user'
@@ -11,9 +11,8 @@ import CreateTarget from "../../components/create-target/create-target"
 import { ITarget } from "./interface"
 import dayjs from "dayjs"
 import duration from "dayjs/plugin/duration"
+import { EChart } from "echarts-taro3-react"
 dayjs.extend(duration)
-import "dayjs/locale/zh-cn"
-dayjs.locale("zh-cn")
 import "./index.scss"
 import "taro-ui/dist/style/components/modal.scss"
 import { getBooks } from '../../apis/books'
@@ -25,6 +24,11 @@ const CreateImg = require("../../images/home/create.png")
 function Index() {
   const dispatch = useDispatch()
   const user: IUser | any = useSelector((state: StoreState) => state.user)
+  const pieRef = useRef<any>(null)
+  const [pieData, setPieData] = useState<Array<{
+    value: string | number,
+    name: string
+  }>>([])
   const [isCreate, setIsCreate] = useState<boolean>(false)
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -37,6 +41,30 @@ function Index() {
   const name = useSelector((state: StoreState) => state.record.name)
   const id = useSelector((state: StoreState) => state.record.id)
   useEffect(() => {
+    if (pieRef.current) {
+      pieRef.current.refresh({
+        tooltip: {
+          trigger: 'item',
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: '70%',
+            data: pieData,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      })
+    }
+  }, [pieRef.current, pieData])
+  useEffect(() => {
     if (user.isLogin) {
       requestBooks()
       requestRecordTotals()
@@ -44,7 +72,12 @@ function Index() {
   }, [user.isLogin])
 
   useEffect(() => {
-  }, [user])
+    if(targets.length > 0){
+      let newTargets = targets.map(item => ({value: (item.totalTime / 1000).toFixed(0), name: item.name}))
+      setPieData(newTargets)
+    }
+  }, [targets])
+
   const requestBooks = useCallback(async () => {
     setIsLoading(true)
     let res = await getBooks()
@@ -132,7 +165,9 @@ function Index() {
           </View>
         </View>
         <View className='chart-area'>
-          <Image src={EmptyImg}></Image>
+          {
+            targets.length > 0 ? <EChart canvasId="pieCanvas" ref={pieRef}></EChart> : <Image src={EmptyImg}></Image>
+          }
         </View>
         {/* 记录的面板 */}
         {
@@ -161,7 +196,7 @@ function Index() {
                     <View className='target-name'>{item.name}</View>
                     <View className='target-bottom'>
                       <View className='target-total-time'>累计：{formateTime(item.totalTime)}秒</View>
-                      <View className='target-last-record-time'>最后记录：{dayjs(item.last_record_time).locale("zh-cn").format("MM月DD日 hh:mm")}</View>
+                      <View className='target-last-record-time'>最后记录：{item.last_record_time ? dayjs(item.last_record_time).format("MM月DD日 hh:mm") : '暂无记录'}</View>
                     </View>
                   </View>
                 )
