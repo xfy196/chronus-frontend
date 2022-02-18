@@ -146,7 +146,7 @@ function Record() {
                     type: SET_ID,
                     data: 0
                 })
-                Taro.navigateTo({
+                Taro.reLaunch({
                     url: '/pages/index/index'
                 })
             }
